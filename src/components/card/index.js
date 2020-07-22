@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: "100%",
   },
   btn: {
     borderColor: "red",
@@ -16,24 +16,20 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
 }));
-const CustomCard = () => {
+const CustomCard = (props) => {
   const classes = useStyles();
+  const { name, company, contributions, img, rank } = props;
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={
-          <Avatar
-            aria-label="recipe"
-            src="https://avatars2.githubusercontent.com/u/4734297?v=4"
-          ></Avatar>
-        }
+        avatar={<Avatar aria-label="recipe" src={img}></Avatar>}
         action={
           <IconButton aria-label="settings">
-            <span className={classes.contr}>1712</span>
+            <span className={classes.contr}>{contributions}</span>
           </IconButton>
         }
-        title="InadullaevMakhmudjon"
-        subheader="Inha University in Tashkent"
+        title={`#${rank} ${name}`}
+        subheader={company}
       />
     </Card>
   );

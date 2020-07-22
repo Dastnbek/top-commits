@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Card from "./components/card";
-import Search from "./components/search";
+import App from "./components/App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Search />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

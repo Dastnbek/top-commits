@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputRoot: {
-    background: "#5398DD",
-    border: "1px solid #5398DD",
+    background: "white",
+    border: "1px solid black",
     borderRadius: "5px",
-    color: "white",
+    color: "black",
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: "white",
+    color: "black",
     zIndex: 2,
   },
   inputInput: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "30ch",
+      width: "35ch",
     },
   },
 }));
