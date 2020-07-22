@@ -16,6 +16,23 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
 }));
+
+const myTitle = (name, rank) => {
+  return (
+    <div>
+      <span
+        style={{
+          marginRight: "5px",
+          fontSize: "17px",
+          fontWeight: "600",
+        }}
+      >
+        #{rank}
+      </span>
+      <span>{name}</span>
+    </div>
+  );
+};
 const CustomCard = (props) => {
   const classes = useStyles();
   const { name, company, contributions, img, rank } = props;
@@ -28,7 +45,7 @@ const CustomCard = (props) => {
             <span className={classes.contr}>{contributions}</span>
           </IconButton>
         }
-        title={`#${rank} ${name}`}
+        title={myTitle(name, rank)}
         subheader={company}
       />
     </Card>
