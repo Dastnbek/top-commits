@@ -14,6 +14,7 @@ const App = () => {
   const [publicUsers, setPublicUsers] = useState([]);
   const [privateUsers, setPrivateUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filtered, setFiltered] = useState([]);
 
   const [mode, setMode] = useState("public");
   const getTopUsers = async () => {
@@ -27,6 +28,19 @@ const App = () => {
     setLoading(true);
     setMode(val.target.value);
     setTimeout(() => setLoading(false), 1000);
+  };
+
+  const handleSearch = (val) => {
+    console.log(val.target.value);
+
+    const filtered = publicUsers.filter(
+      (user) =>
+        user.login.toLowerCase().indexOf(val.target.value.toLowerCase()) !== -1
+    );
+
+    console.log(filtered.length);
+
+    setFiltered(filtered);
   };
   useEffect(() => {
     getTopUsers();
@@ -62,40 +76,54 @@ const App = () => {
                   labelPlacement="start"
                 />
               </RadioGroup>
-              <Search />
+              <Search onSearch={handleSearch} />
             </Grid>
           </Grid>
         </Grid>
 
-        {loading ? (
-          <Loader loading={loading} />
-        ) : (
-          <Grid container spacing={1}>
-            {mode === "public"
-              ? publicUsers.map((user) => (
-                  <Grid item xs={4}>
-                    <CustomCard
-                      name={user.login}
-                      company={user.company}
-                      contributions={user.contributions}
-                      img={user.avatarUrl}
-                      rank={user.rank}
-                    />
-                  </Grid>
-                ))
-              : privateUsers.map((user) => (
-                  <Grid item xs={4}>
-                    <CustomCard
-                      name={user.login}
-                      company={user.company}
-                      contributions={user.contributions}
-                      img={user.avatarUrl}
-                      rank={user.rank}
-                    />
-                  </Grid>
-                ))}
-          </Grid>
-        )}
+        <Grid container spacing={1}>
+          {loading ? (
+            <Loader loading={loading} />
+          ) : filtered.length === 0 ? (
+            <>
+              {mode === "public"
+                ? publicUsers.map((user) => (
+                    <Grid item xs={4} key={user.rank}>
+                      <CustomCard
+                        name={user.login}
+                        company={user.company}
+                        contributions={user.contributions}
+                        img={user.avatarUrl}
+                        rank={user.rank}
+                      />
+                    </Grid>
+                  ))
+                : privateUsers.map((user) => (
+                    <Grid item xs={4} key={user.rank}>
+                      <CustomCard
+                        name={user.login}
+                        company={user.company}
+                        contributions={user.contributions}
+                        img={user.avatarUrl}
+                        rank={user.rank}
+                      />
+                    </Grid>
+                  ))}
+            </>
+          ) : (
+            filtered.map((user) => (
+              <Grid item xs={4} key={user.rank}>
+                <CustomCard
+                  name={user.login}
+                  company={user.company}
+                  contributions={user.contributions}
+                  img={user.avatarUrl}
+                  rank={user.rank}
+                />
+              </Grid>
+            ))
+          )}
+        </Grid>
       </Container>
     </>
   );

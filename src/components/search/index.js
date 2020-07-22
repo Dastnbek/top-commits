@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomSearch = () => {
+const CustomSearch = ({ onSearch }) => {
   const classes = useStyles();
   return (
     <div className={classes.search}>
@@ -62,6 +62,7 @@ const CustomSearch = () => {
           root: classes.inputRoot,
           input: classes.inputInput,
         }}
+        onChange={onSearch}
         inputProps={{ "aria-label": "search" }}
       />
     </div>
