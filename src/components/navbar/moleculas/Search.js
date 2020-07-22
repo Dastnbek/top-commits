@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
@@ -48,23 +48,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomSearch = ({ onSearch }) => {
+const CustomSearch = ({ onSubmit }) => {
   const classes = useStyles();
+  const [search, setSearch] = useState("");
   return (
     <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <SearchIcon />
-      </div>
+      <form onSubmit={(event) => onSubmit(event, search)}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
 
-      <InputBase
-        placeholder="Search for GitHub user"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        onChange={onSearch}
-        inputProps={{ "aria-label": "search" }}
-      />
+        <InputBase
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          placeholder="Search for GitHub user"
+          inputProps={{ "aria-label": "search" }}
+          onChange={(event) => setSearch(event.target.value)}
+        />
+      </form>
     </div>
   );
 };

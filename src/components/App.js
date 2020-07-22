@@ -23,20 +23,37 @@ const App = () => {
 
   const handleChange = (val) => {
     setLoading(true);
+    setFiltered([]);
     setMode(val.target.value);
     setTimeout(() => setLoading(false), 1000);
   };
 
-  const handleSearch = (val) => {
-    const filtered = publicUsers.filter(
+  const handleSubmit = (event, searchText) => {
+    event.preventDefault();
+    let arrOfUsers = [];
+    mode === "public"
+      ? (arrOfUsers = [...publicUsers])
+      : (arrOfUsers = [...privateUsers]);
+
+    const filtered = arrOfUsers.filter(
       (user) =>
-        user.login.toLowerCase().indexOf(val.target.value.toLowerCase()) !== -1
+        user.login.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
     );
 
     setFiltered(filtered);
   };
 
-  const renderUsers = (arrOfUsers) => {
+  const renderUsers = () => {
+    let arrOfUsers = [];
+
+    if (filtered.length > 0) {
+      arrOfUsers = [...filtered];
+    } else {
+      mode === "public"
+        ? (arrOfUsers = [...publicUsers])
+        : (arrOfUsers = [...privateUsers]);
+    }
+
     return arrOfUsers.map((user) => (
       <Grid item xs={4} key={user.rank}>
         <CustomCard
@@ -52,23 +69,15 @@ const App = () => {
   useEffect(() => {
     getTopUsers();
   }, []);
+
+  console.log(filtered);
   return (
     <>
       <Container maxWidth="lg">
-        <Navbar onChange={handleChange} onSearch={handleSearch} />
+        <Navbar onChange={handleChange} onSubmit={handleSubmit} />
 
         <Grid container spacing={1}>
-          {loading ? (
-            <Loader loading={loading} />
-          ) : filtered.length === 0 ? (
-            <>
-              {mode === "public"
-                ? renderUsers([...publicUsers])
-                : renderUsers([...privateUsers])}
-            </>
-          ) : (
-            renderUsers([...filtered])
-          )}
+          {loading ? <Loader loading={loading} /> : renderUsers()}
         </Grid>
       </Container>
     </>
