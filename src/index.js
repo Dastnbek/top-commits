@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Card from "./components/card";
 
 ReactDOM.render(
   <React.StrictMode>
-    <h2>Hello react</h2>
+    <Card />
   </React.StrictMode>,
   document.getElementById("root")
 );
