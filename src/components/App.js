@@ -35,6 +35,20 @@ const App = () => {
 
     setFiltered(filtered);
   };
+
+  const renderUsers = (arrOfUsers) => {
+    return arrOfUsers.map((user) => (
+      <Grid item xs={4} key={user.rank}>
+        <CustomCard
+          name={user.login}
+          company={user.company}
+          contributions={user.contributions}
+          img={user.avatarUrl}
+          rank={user.rank}
+        />
+      </Grid>
+    ));
+  };
   useEffect(() => {
     getTopUsers();
   }, []);
@@ -49,41 +63,11 @@ const App = () => {
           ) : filtered.length === 0 ? (
             <>
               {mode === "public"
-                ? publicUsers.map((user) => (
-                    <Grid item xs={4} key={user.rank}>
-                      <CustomCard
-                        name={user.login}
-                        company={user.company}
-                        contributions={user.contributions}
-                        img={user.avatarUrl}
-                        rank={user.rank}
-                      />
-                    </Grid>
-                  ))
-                : privateUsers.map((user) => (
-                    <Grid item xs={4} key={user.rank}>
-                      <CustomCard
-                        name={user.login}
-                        company={user.company}
-                        contributions={user.contributions}
-                        img={user.avatarUrl}
-                        rank={user.rank}
-                      />
-                    </Grid>
-                  ))}
+                ? renderUsers([...publicUsers])
+                : renderUsers([...privateUsers])}
             </>
           ) : (
-            filtered.map((user) => (
-              <Grid item xs={4} key={user.rank}>
-                <CustomCard
-                  name={user.login}
-                  company={user.company}
-                  contributions={user.contributions}
-                  img={user.avatarUrl}
-                  rank={user.rank}
-                />
-              </Grid>
-            ))
+            renderUsers([...filtered])
           )}
         </Grid>
       </Container>
