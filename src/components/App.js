@@ -12,11 +12,13 @@ const App = () => {
   const [privateUsers, setPrivateUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtered, setFiltered] = useState([]);
+  const [date, setDate] = useState("");
   const [mode, setMode] = useState("public");
 
   const getTopUsers = async () => {
     const result = await commitsApi.getUsers;
     setLoading(false);
+    setDate(result.data.users.generated.split(" ")[0]);
     setPublicUsers(result.data.users.users);
     setPrivateUsers(result.data.users.private_users);
   };
@@ -74,7 +76,7 @@ const App = () => {
   return (
     <>
       <Container maxWidth="lg">
-        <Navbar onChange={handleChange} onSubmit={handleSubmit} />
+        <Navbar onChange={handleChange} onSubmit={handleSubmit} date={date} />
 
         <Grid container spacing={1}>
           {loading ? <Loader loading={loading} /> : renderUsers()}
