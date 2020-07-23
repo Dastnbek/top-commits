@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Highlight from "react-highlighter";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,11 +34,19 @@ const myTitle = (name, rank, className, search) => {
   );
 };
 
-const companyName = (company) => {
-  return <Typography noWrap>{company}</Typography>;
+const companyName = (company, matches) => {
+  return (
+    <Typography
+      noWrap
+      style={matches ? { width: "100px" } : { width: "250px" }}
+    >
+      {company}
+    </Typography>
+  );
 };
 const CustomCard = (props) => {
   const classes = useStyles();
+  const matches = useMediaQuery("(max-width:800px)");
   const { name, company, contributions, img, rank, searchValue } = props;
   return (
     <Card className={classes.root}>
@@ -49,7 +58,7 @@ const CustomCard = (props) => {
           </IconButton>
         }
         title={myTitle(name, rank, classes.rank, searchValue)}
-        subheader={companyName(company)}
+        subheader={companyName(company, matches)}
       />
     </Card>
   );
