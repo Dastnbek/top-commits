@@ -57,7 +57,7 @@ const App = () => {
     }
 
     return arrOfUsers.map((user) => (
-      <Grid item xs={4} key={user.rank}>
+      <Grid item xs={3} sm={4} zeroMinWidth key={user.rank}>
         <CustomCard
           name={user.login}
           company={user.company}
@@ -77,7 +77,6 @@ const App = () => {
     <>
       <Container maxWidth="lg">
         <Navbar onChange={handleChange} onSubmit={handleSubmit} date={date} />
-
         <Grid container spacing={1}>
           {loading ? <Loader loading={loading} /> : renderUsers()}
         </Grid>

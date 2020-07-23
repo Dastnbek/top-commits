@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid black",
     borderRadius: "5px",
     color: "black",
+    width: "100%",
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
