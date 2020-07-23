@@ -68,7 +68,7 @@ const App = () => {
     }
 
     return arrOfUsers.map((user) => (
-      <Grid item xs={3} sm={4} zeroMinWidth key={user.rank}>
+      <Grid item xs={12} sm={4} zeroMinWidth key={user.rank}>
         <CustomCard
           name={user.login}
           searchValue={searchValue}
