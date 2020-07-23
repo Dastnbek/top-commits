@@ -12,6 +12,7 @@ const App = () => {
   const [privateUsers, setPrivateUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtered, setFiltered] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const [date, setDate] = useState("");
   const [mode, setMode] = useState("public");
 
@@ -42,6 +43,7 @@ const App = () => {
         user.login.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
     );
 
+    setSearchValue(searchText);
     setFiltered(filtered);
   };
 
@@ -60,6 +62,7 @@ const App = () => {
       <Grid item xs={3} sm={4} zeroMinWidth key={user.rank}>
         <CustomCard
           name={user.login}
+          searchValue={searchValue}
           company={user.company}
           contributions={user.contributions}
           img={user.avatarUrl}

@@ -5,6 +5,7 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
+import Highlight from "react-highlighter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const myTitle = (name, rank, className) => {
+const myTitle = (name, rank, className, search) => {
   return (
     <div>
       <span className={className}>#{rank}</span>
-      <span>{name}</span>
+      <Highlight search={search}>{name}</Highlight>
     </div>
   );
 };
@@ -37,7 +38,7 @@ const companyName = (company) => {
 };
 const CustomCard = (props) => {
   const classes = useStyles();
-  const { name, company, contributions, img, rank } = props;
+  const { name, company, contributions, img, rank, searchValue } = props;
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -47,7 +48,7 @@ const CustomCard = (props) => {
             <span className={classes.contr}>{contributions}</span>
           </IconButton>
         }
-        title={myTitle(name, rank, classes.rank)}
+        title={myTitle(name, rank, classes.rank, searchValue)}
         subheader={companyName(company)}
       />
     </Card>
