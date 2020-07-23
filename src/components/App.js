@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import CustomCard from "./card";
 import Loader from "./loader";
@@ -15,9 +16,14 @@ const App = () => {
   const [searchValue, setSearchValue] = useState("");
   const [date, setDate] = useState("");
   const [mode, setMode] = useState("public");
+  const [notify, setNotify] = useState(false);
 
   const getTopUsers = async () => {
     const result = await commitsApi.getUsers;
+    if (result.length === 0) {
+      setNotify(true);
+      console.log("brrr");
+    }
     setLoading(false);
     setDate(result.data.users.generated.split(" ")[0]);
     setPublicUsers(result.data.users.users);
@@ -43,6 +49,9 @@ const App = () => {
         user.login.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
     );
 
+    if (filtered.length === 0) {
+      setNotify(true);
+    }
     setSearchValue(searchText);
     setFiltered(filtered);
   };
@@ -71,11 +80,14 @@ const App = () => {
       </Grid>
     ));
   };
+
+  const handleClose = () => {
+    setNotify(false);
+  };
   useEffect(() => {
     getTopUsers();
   }, []);
 
-  console.log(filtered);
   return (
     <>
       <Container maxWidth="lg">
@@ -84,6 +96,13 @@ const App = () => {
           {loading ? <Loader loading={loading} /> : renderUsers()}
         </Grid>
       </Container>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={3000}
+        open={notify}
+        onClose={handleClose}
+        message="No such user in top 256"
+      />
     </>
   );
 };
