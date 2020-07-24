@@ -22,14 +22,16 @@ const Navbar = ({ onChange, onSubmit, date }) => {
         style={{ marginTop: "10px", marginBottom: "20px" }}
       >
         <Grid container justify="center" spacing={2}>
-          <Grid sm={3} style={{ textAlign: "center" }}>
-            <RadioBtn onChange={onChange} />
+          <Grid xs={12} sm={12} md={4} lg={3} style={{ textAlign: "center" }}>
+            <div style={{ display: "inline-block" }}>
+              <RadioBtn onChange={onChange} />
+            </div>
           </Grid>
 
-          <Grid sm={6} style={{ textAlign: "center" }}>
+          <Grid xs={12} sm={12} md={4} lg={6} style={{ textAlign: "center" }}>
             <CustomSearch onSubmit={onSubmit} />
           </Grid>
-          <Grid sm={3} style={{ textAlign: "center" }}>
+          <Grid xs={12} sm={12} md={4} lg={3} style={{ textAlign: "center" }}>
             <DateContainer>
               <span>
                 Generated at <TheDate> {date} </TheDate>
